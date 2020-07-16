@@ -85,6 +85,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- dependência do driver mysql e é usado normalmente em tempo de execução -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 
 	<!-- Transforma o projeto final em um arquivo .jar executável. Esse executável possui a classe raiz do projeto, servindo para rodar o mesmo -->
