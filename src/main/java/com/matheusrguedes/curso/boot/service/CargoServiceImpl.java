@@ -43,7 +43,6 @@ public class CargoServiceImpl implements CargoService {
 	public List<Cargo> buscarTodos() {
 		
 		return cargoDao.findAll();
-	
 	}
 
 }
