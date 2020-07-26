@@ -1,0 +1,85 @@
+
+<!-- 
+	Página principal da nossa aplicação, em que terá o layout e será usada por todas as outras páginas 
+	
+Adicionar plugin autocomplete: http://olamundo-java.blogspot.com/2016/04/instalando-plugin-do-thymeleaf-no.html
+
+=--=-= NAMESPACES =-=-=-=
+
+xmlns:th 	 -> namespace referente aos componentes do thymeleaf (tanto para fragmentos como, tratabar com listas, formulários)
+xmlns:layout -> namespace referente á biblioteca de layout
+
+=-=-=-= ATRIBUTOS =-=-=-= 
+Doc:    https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html, capitulo 8
+Sintax: diretorio(caso esteje em uma pasta)/nomeArquivo :: nomeFragmento;
+
+th:fragment	 -> Quando se quer adicionar partes de um modelo para outro, como rodaé, header, etc, definimos essas partes como fragmentos, usados em quem será incluso;
+th:insert	 -> Insere o fragmento dentro da tag expecífica;
+th:replace	 -> Substitui o fragmento pela tag que vai inserir;
+
+-->
+
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<title>Spring-Boot Básico</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<link rel="icon" href="/image/favicon.png" />
+
+	<!-- Bootstrap core CSS -->
+	<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+	
+	<!-- Custom styles for this template -->
+	<link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+	<header th:replace="fragments/header :: cabecalho">
+		<div>header</div>
+	</header>
+	
+	<div>
+		<aside>
+			<nav>
+				<span>menu</span>
+			</nav>
+		</aside>
+		
+		<section>
+			<div>conteúdo das páginas</div>
+		</section>
+	</div>
+	
+	<footer th:replace="fragments/footer :: rodape">
+		<div>footer</div>
+	</footer>
+	
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	    
+		$(function() {
+			$('[data-toggle="popover"]').popover();
+		});
+		
+		$(document).ready(function(){
+		    $(".navbar-toggle").click(function(){
+		        $(".sidebar").toggleClass("sidebar-open");
+		    })
+		});
+
+	</script>
+</body>
+</html>
