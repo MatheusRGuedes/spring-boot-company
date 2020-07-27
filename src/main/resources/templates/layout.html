@@ -13,9 +13,13 @@ xmlns:layout -> namespace referente á biblioteca de layout
 Doc:    https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html, capitulo 8
 Sintax: diretorio(caso esteje em uma pasta)/nomeArquivo :: nomeFragmento;
 
-th:fragment	 -> Quando se quer adicionar partes de um modelo para outro, como rodaé, header, etc, definimos essas partes como fragmentos, usados em quem será incluso;
-th:insert	 -> Insere o fragmento dentro da tag expecífica;
-th:replace	 -> Substitui o fragmento pela tag que vai inserir;
+th:fragment	 	-> Quando se quer adicionar partes de um modelo para outro, como rodaé, header, etc, definimos essas partes como fragmentos, usados em quem será incluso;
+th:insert	 	-> Insere o fragmento dentro da tag expecífica;
+th:replace	 	-> Substitui o fragmento pela tag que vai inserir;
+layout:fragment -> Fragmento da biblioteca de layout.
+				-> Fornece um recurso um pouco mais avançado com páginas que tem q abrir no layout, através da resposta do controller. A biblioteca se encarrega de levar o frag d layout 
+				-> para nosso layout.
+layout:decorate -> Informa que o fragmento de layout será incluso no arquivo informado.
 
 -->
 
@@ -44,14 +48,14 @@ th:replace	 -> Substitui o fragmento pela tag que vai inserir;
 		<div>header</div>
 	</header>
 	
-	<div>
+	<div class="layout-main">
 		<aside>
-			<nav>
+			<nav th:replace="fragments/sidebar :: nav-sidebar">
 				<span>menu</span>
 			</nav>
 		</aside>
 		
-		<section>
+		<section layout:fragment="corpo">
 			<div>conteúdo das páginas</div>
 		</section>
 	</div>
@@ -62,7 +66,13 @@ th:replace	 -> Substitui o fragmento pela tag que vai inserir;
 	
 	<!-- Bootstrap core JavaScript
     ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- Placed at the end of the document so the pages load faster 
+		 
+		 Webjars -> ferramenta que une bibliotecas client-side e que te permite gerencia-las
+		 		 -> Buscar url de uma biblioteca do webjars: sempre começa com webjar para informar ao spring que vc está localizando o recurso na aplicação. 
+		 		 -> Sintax dos parâmetros(path) de url do webjars: verificar em webjras.org e ir na biblioteca.
+		 		    Demais paths encontram-se na documentação.
+	-->
 	
 	<script src="/webjars/jquery/jquery.min.js"></script>
 	<script src="/webjars/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
