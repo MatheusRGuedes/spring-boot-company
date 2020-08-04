@@ -1,3 +1,14 @@
+<!-- 
+Preparando a página de cadastro para envioar os dados ao controller:
+
+th:action -> envia os dados para um lugar que vai tratá-los. O mesmo que c:url da JSTL ou a spring:url do spring mvc.
+		  -> Síntax: @{expressão}
+th:object -> esse componente declara uma expressão que representa uma variável no contexto(departamento) da aplicação.
+		  -> Envia os dados para o controler já como um objeto (departamento), assim como antes de uma execução do update em que o objeto será trazido por esse componente.
+th:field  -> Indique em que atributo o campo está vinculado. Esse componente é vinculad ao th:object
+		  -> Dessa forma o spring e o thymeleaf conseguem criar o objeto departamento e setar seus atributos, enviando para o controller
+ -->
+
 <!DOCTYPE html>
 <html layout:decorate="~{Layout}">
 <head><meta charset="UTF-8"/></head>
@@ -20,13 +31,19 @@
 	            </div>
 	        </nav>
 	
+			<!-- 
+			Quando é feito uma requisitão em departamentos/cadastrar, o spring espera um objeto departamento do contexto, sendo que não existe.
+			Por isso dá um erro quando é feito a requisição, pois o controller não enviou esse objeto para a página.
+			Solução: declarar um parâmetro para o método que faz requisição, dai o controlador e página reconhecem o obj departamento.
+			-->
+	
 	        <div class="container" id="cadastro">
-	            <form action="/departamentos/salvar" method="POST">
+	            <form th:action="@{/departamentos/salvar}" th:object="${departamento}" method="POST">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="nome">Departamento</label>
 	                        <input type="text" class="form-control" id="nome"
-	                               placeholder="Nome Departamento" autofocus="autofocus" name="nome" value=""/>
+	                               placeholder="Nome Departamento" autofocus="autofocus" th:field="*{nome}"/>
 	                    </div>
 	                </div>
 	                <input type="hidden" id="id" name="id" value=""/>
