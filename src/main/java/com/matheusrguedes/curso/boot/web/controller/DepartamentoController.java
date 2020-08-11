@@ -5,9 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.matheusrguedes.curso.boot.domain.Departamento;
 import com.matheusrguedes.curso.boot.service.DepartamentoService;
@@ -25,6 +29,11 @@ import com.matheusrguedes.curso.boot.service.DepartamentoService;
  * 
  * ModelMap -> Classe que serve para tranferir dados para renderizar uma view (algum template engine) através do controlador. Trata os dados como se estivessem num Map;
  * 
+ * PathVariable -> Consegue pegar o id pela url e injetar no parâmetro.
+ * 
+ * RedirectAttributes -> Usado em cenário de redirecionamento e podem ser acessados (flashAttributes) depois, só em métodos que serão os finais de uma operação de redirecionamento.
+ * 					  -> Fornece uma possibilidade de compartilhar atributos etre dois métodos.
+ * 
  * */
 
 @Controller
@@ -34,18 +43,24 @@ public class DepartamentoController {
 	@Autowired
 	private DepartamentoService departamentoService;
 	
+	/*-------- Cadastro -------*/
+	
 	@GetMapping("/cadastrar")
 	public String cadastro(Departamento departamento) {
 		return "/departamento/cadastro";
 	}
 	
 	@PostMapping("/salvar")
-	public String salvar(Departamento departamento) {
+	public String salvar(Departamento departamento, RedirectAttributes attr) {
 		
 		departamentoService.salvar(departamento);
 		
+		attr.addFlashAttribute("success", "Departamento inserido com sucesso.");
+		
 		return "redirect:/departamentos/cadastrar";
 	}
+	
+	/*-------- Listagem -------*/
 	
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
@@ -55,5 +70,49 @@ public class DepartamentoController {
 		model.addAttribute("listaDepartamentos", lista);
 		
 		return "/departamento/lista";
+	}
+	
+	/*---------- Edição ----------*/
+	
+	@GetMapping("/editar/{id}")
+	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+		
+		Departamento departamento = departamentoService.buscarPorId(id);
+		
+		model.addAttribute("departamento", departamento);
+			
+		return "/departamento/cadastro";
+	}
+	
+	@PostMapping("/editar")
+	public String editar(Departamento departamento, RedirectAttributes attr) {
+		
+		departamentoService.editar(departamento);
+
+		attr.addFlashAttribute("success", "Departamento editado com sucesso.");
+		
+		return "redirect:/departamentos/cadastrar";
+	}
+	
+	/*--------- Exclusão ----------*/
+	
+	@GetMapping("/excluir/{id}")
+	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
+		
+		if (departamentoService.temCargos(id)) {
+			
+			attr.addFlashAttribute("fail", "Departamento não removido. Possui cargo(s) vinculado(s).");
+			
+		} else {
+			
+			departamentoService.excluir(id);
+			
+			attr.addFlashAttribute("success", "Departamento excluído com sucesso.");
+		}
+		
+		return "redirect:/departamentos/listar";
+		
+		// Não muda url
+		//return listar(model);
 	}
 }
