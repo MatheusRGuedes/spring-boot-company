@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -34,6 +35,8 @@ public class CargoController {
 	@Autowired
 	private CargoService cargoService;
 
+	/*-------- Cadastro ---------*/
+	
 	@GetMapping("/cadastrar")
 	public String cadastrar(Cargo cargo) {
 		
@@ -54,6 +57,8 @@ public class CargoController {
 		return "redirect:/cargos/cadastrar";
 	}
 	
+	/*-------- Listagem ----------*/
+	
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
 		
@@ -63,6 +68,48 @@ public class CargoController {
 		
 		return "/cargo/lista";
 	}
+	
+	/*-------- Edição ---------*/
+	
+	@GetMapping("/editar/{cargoId}")
+	public String preEdita(@PathVariable("cargoId") Long id, 
+			ModelMap model) {
+		
+		Cargo cargo = cargoService.buscarPorId(id);
+		
+		model.addAttribute("cargo", cargo);
+		
+		return "/cargo/cadastro";
+	}
+	
+	@PostMapping("/editar")
+	public String editar(Cargo cargo, RedirectAttributes attr) {
+		
+		cargoService.editar(cargo);
+		
+		attr.addFlashAttribute("success", "Cargo atualizado com sucesso.");
+		
+		return "redirect:/cargos/cadastrar";
+	}
+	
+	/*-------- Exclusão ---------*/
+	
+	@GetMapping("/deletar/{cargoId}")
+	public String deletar(@PathVariable Long cargoId, 
+			RedirectAttributes attr) {
+		
+		if (!cargoService.temFuncionarios(cargoId)) {
+			
+			cargoService.excluir(cargoId);
+			attr.addFlashAttribute("success", "Cargo excluído com sucesso.");
+		} else {
+			
+			attr.addFlashAttribute("fail", "Cargo não excluído. Possui funcionários vinculados.");
+		}		
+		
+		return "redirect:/cargos/listar";
+	}
+	
 	
 	@ModelAttribute("listaDepartamentos")
 	public List<Departamento> listaDepartamentos() {
