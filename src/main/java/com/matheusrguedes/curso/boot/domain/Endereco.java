@@ -28,6 +28,7 @@ public class Endereco extends AbstractEntity<Long> {
 	
 	private String complemento;
 
+	
 	public String getLogradouro() {
 		return logradouro;
 	}

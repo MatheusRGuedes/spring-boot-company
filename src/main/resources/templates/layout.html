@@ -83,7 +83,10 @@ layout:decorate -> Informa que o fragmento de layout será incluso no arquivo in
 		var url = '', compl = '';
 	
 		$(function() {
-			$('[data-toggle="popover"]').popover();
+			$('[data-toggle="popover"]').popover(
+				//opção content, passando o value do botão -> https://getbootstrap.com/docs/4.0/components/popovers/#options
+				//content: function() { return $(this).val(); }
+			);
 		});
 		
 		$(document).ready(function() {
