@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.matheusrguedes.curso.boot.dao.FuncionarioDao;
 import com.matheusrguedes.curso.boot.domain.Funcionario;
 
+/*
+ * @Transactional -> indica que é um método que se precisará abrir uma transação e será apenas de leitura;
+ * */
+
 @Service
 @Transactional(readOnly = false)
 public class FuncionarioServiceImpl implements FuncionarioService {
@@ -41,5 +45,11 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	@Transactional(readOnly = true)
 	public List<Funcionario> buscarTodos() {
 		return funcionarioDao.findAll();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Funcionario> buscarPorNome(String nome) {
+		return funcionarioDao.findByName(nome);
 	}
 }

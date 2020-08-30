@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.matheusrguedes.curso.boot.domain.Cargo;
@@ -49,12 +51,66 @@ public class FuncionarioController {
 	}
 	
 	
+	/*---------- Listagem ----------*/
+	
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
 		
 		List<Funcionario> listaFuncionarios = funcionarioService.buscarTodos();
 		
 		model.addAttribute("listaFuncionarios", listaFuncionarios);
+		
+		return "/funcionario/lista";
+	}
+	
+	
+	/*----------- Edição ------------*/
+	
+	@GetMapping("/editar/{funcionarioId}")
+	public String preEditar(@PathVariable("funcionarioId") Long id, 
+			RedirectAttributes attr) {
+		
+		Funcionario funcionario = funcionarioService.buscarPorId(id);
+		
+		attr.addFlashAttribute("funcionario", funcionario);
+		
+		return "redirect:/funcionarios/cadastrar";
+	}
+	
+	
+	@PostMapping("/editar")
+	public String editar(Funcionario funcionario, RedirectAttributes attr) {
+		
+		funcionarioService.editar(funcionario);
+		
+		attr.addFlashAttribute("success", "Funcionário editado com sucesso.");
+		
+		return "redirect:/funcionarios/cadastrar";
+	}
+	
+	
+	/*----------- Exclusão ----------*/
+	
+	@GetMapping("/excluir/{id}")
+	public String excluir(@PathVariable Long id, RedirectAttributes attr) {
+		
+		funcionarioService.excluir(id);
+		
+		attr.addFlashAttribute("success", "Funcionário removido com sucesso.");
+		
+		return "redirect:/funcionarios/listar";
+	}
+	
+	
+	/*----------- Buscas ------------*/
+	
+	@GetMapping("/buscar/nome")
+	public String buscarNome(@RequestParam("nome") String nomeFuncionario,
+			ModelMap model) {
+		
+		List<Funcionario> funcionarios = funcionarioService.buscarPorNome(nomeFuncionario);
+		
+		model.addAttribute("listaFuncionarios", funcionarios);
 		
 		return "/funcionario/lista";
 	}

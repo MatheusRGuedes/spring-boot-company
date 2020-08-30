@@ -26,7 +26,8 @@
 	        
 	        	<div th:replace="fragments/alert"></div>
 	        
-	            <form th:action="@{/funcionarios/salvar}" method="POST" th:object="${funcionario}">
+	            <form th:action="@{ (${funcionario.id != null} ? '/funcionarios/editar' : '/funcionarios/salvar') }" 
+	            	  method="POST" th:object="${funcionario}">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="nome">Nome do Funcionário</label>
@@ -136,6 +137,8 @@
 	                </div>
 	                
 	                <input type="hidden" id="id" th:field="*{id}" />
+	                <input type="hidden" id="enderecoId" th:field="*{endereco.id}">
+	                
 	                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 	            </form>
 	        </div>
