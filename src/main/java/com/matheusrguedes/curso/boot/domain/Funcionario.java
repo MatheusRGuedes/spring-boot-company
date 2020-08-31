@@ -18,7 +18,8 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 /*
  * Como o spring não sabe converter string para localDate da erro, assim como para o bigdecimal.
  * 
- * @DateTimeFormat -> essa anotação informa ao spring que o atributo será convertido conforme o formato padrão q é dd/MM/yyyy
+ * @DateTimeFormat -> essa anotação informa ao spring que o atributo será convertido conforme o formato padrão q é dd/MM/yyyy.
+ * 				   -> Pode ser usado também antes de um parâmetro de método do controller.
  * 
  * ISO 			   -> Padrão para data totalmente numérica em formato AAAA-MM-DD
  * ISO.DATE		   -> Formato que contêm apenas a data, para yyyy-mm-dd. Caso o valor vier em branco, será reconhecido e setado como null.

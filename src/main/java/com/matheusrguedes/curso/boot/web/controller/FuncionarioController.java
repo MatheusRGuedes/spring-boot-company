@@ -1,11 +1,13 @@
 package com.matheusrguedes.curso.boot.web.controller;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -109,6 +111,18 @@ public class FuncionarioController {
 			ModelMap model) {
 		
 		List<Funcionario> funcionarios = funcionarioService.buscarPorNome(nomeFuncionario);
+		
+		model.addAttribute("listaFuncionarios", funcionarios);
+		
+		return "/funcionario/lista";
+	}
+	
+	@GetMapping("/buscar/data")
+	public String buscarData(@RequestParam("entrada") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE) LocalDate dataEntrada,
+							 @RequestParam("saida") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE) LocalDate dataSaida,
+							 ModelMap model) {
+		
+		List<Funcionario> funcionarios = funcionarioService.buscarPorData(dataEntrada, dataSaida);
 		
 		model.addAttribute("listaFuncionarios", funcionarios);
 		

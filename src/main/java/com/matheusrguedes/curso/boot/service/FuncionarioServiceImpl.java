@@ -1,5 +1,8 @@
 package com.matheusrguedes.curso.boot.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
 	@Autowired
 	private FuncionarioDao funcionarioDao;
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	@Override
 	public void salvar(Funcionario funcionario) {
@@ -51,5 +56,22 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	@Transactional(readOnly = true)
 	public List<Funcionario> buscarPorNome(String nome) {
 		return funcionarioDao.findByName(nome);
+	}
+
+	@Override
+	public List<Funcionario> buscarPorData(LocalDate dataEntrada, LocalDate dataSaida) {
+		
+		if (dataEntrada == null || dataSaida == null) {
+			
+			if (dataEntrada == null && dataSaida != null) {
+				return funcionarioDao.findByExitData(dataSaida);
+			} else if (dataEntrada != null && dataSaida == null) {
+				return funcionarioDao.findByEntryData(dataEntrada);
+			}
+			
+			return new ArrayList<>();
+		}
+		
+		return funcionarioDao.findBetweenDatas(dataEntrada, dataSaida);
 	}
 }
