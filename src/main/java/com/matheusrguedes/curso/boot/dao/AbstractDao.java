@@ -64,6 +64,7 @@ public abstract class AbstractDao<T, PK extends Serializable> {
 				.getResultList();
 	}
 	
+	// Use of position parameters in the queries, prefixed with "?", followed by the numeric position.
 	protected List<T> createQuery(String jpql, Object... params) {
 		TypedQuery<T> query = entityManager.createQuery(jpql, entityClass);
 		

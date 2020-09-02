@@ -80,14 +80,41 @@ layout:decorate -> Informa que o fragmento de layout será incluso no arquivo in
 	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	    
+		var url = '', compl = '';
+	
 		$(function() {
-			$('[data-toggle="popover"]').popover();
+			$('[data-toggle="popover"]').popover(
+				//opção content, passando o value do botão -> https://getbootstrap.com/docs/4.0/components/popovers/#options
+				//content: function() { return $(this).val(); }
+			);
 		});
 		
-		$(document).ready(function(){
+		$(document).ready(function() {
+			
 		    $(".navbar-toggle").click(function(){
 		        $(".sidebar").toggleClass("sidebar-open");
-		    })
+		    });
+		    
+		    
+		    //identifica um botão  que o id começe com btn_
+			$('button[id*="btn_"]').click(function() {
+			
+				compl = $(this).attr("id");
+			
+				url = 'http://localhost:8080/' + compl.split("_")[1];
+			});
+		    
+		    
+		    $('#ok_confirm').click(function(){
+		    	document.location.href = url;
+		    });
+		    
+		    
+		    //$('.btn-outline-success').click(function() {
+		    //	document.formSearch.action = 
+		    //		"http://localhost:8080/funcionarios/buscar/nome"; //nome?nome=teste
+		    //		// + $('#nomeSearch').val();
+		    //});
 		});
 
 	</script>

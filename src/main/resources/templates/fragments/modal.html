@@ -1,0 +1,38 @@
+<!-- 
+	Modal para confirmação de exclusão dos objetos na tela de listagem 
+	
+	&times;  -> símbolo do x.
+	&hellip; -> símbolo de ...
+	
+	data-dismiss -> componente informa q ao ser clicado será fechado o modal
+-->
+
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+
+	<!-- Confirm Modal -->
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" th:fragment="modal">
+	  	<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<h5 class="modal-title">Atenção</h5>
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          			<span aria-hidden="true">&times;</span> 
+	       			</button>
+	      		</div>
+	      		<div class="modal-body">
+	        		Clique em ok para proceder com a exclusão.&hellip;
+	    		</div>
+	      		<div class="modal-footer">
+	        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	        		<button id="ok_confirm" type="button" class="btn btn-primary">Ok</button>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+
+</body>
+</html>

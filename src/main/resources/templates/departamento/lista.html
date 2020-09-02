@@ -1,7 +1,24 @@
+<!-- 
+	Tratamento da página de listagem para visualizar os dados cadastrados
+ 
+ th:each -> repete o fragmento (tag) usada com o componente th:each para cada elemento. Sintax: elemento da iteração e a lista de objetos como variavel enviada do controller;
+ 		 -> Sobrescreve os valores dentro das tags td;
+ 		 
+ th:text -> componente que imprime dados;
+ 
+ th:href -> Permite informar links (link expression) para outros servers usando o padrão @{}
+ 		 -> O {id} é expressão que representa uma path variable com nome id, e será pego no método preEdita.
+ 		 -> Assim, o parâmetro entre parênteses: (id = valor), irá substituir o valor do path variable;
+ 		 -> https://www.thymeleaf.org/doc/articles/standardurlsyntax.html
+ 		 
+ data-toggle -> componente que informa q o botão ao ser apertado, abrirá um modal.
+ data-target -> componente que informa o alvo a ser aberto.
+ -->
+
 <!DOCTYPE html>
 <html layout:decorate="~{Layout}">
 <head><meta charset="UTF-8"/></head>
-<body>
+	<body>
 	
 	    <section class="layout-content" layout:fragment="corpo">
 	
@@ -21,71 +38,41 @@
 	        </nav>
 	
 	        <div class="container" id="listagem">
-	
+	        	
+	        	<div th:replace="fragments/alert"></div>
+	        
 	            <div class="table-responsive">
 	                <table class="table table-striped table-hover table-sm">
 	                    <thead>
-	                    <tr>
-	                        <th>#</th>
-	                        <th>Nome</th>
-	                        <th>Ação</th>
-	                    </tr>
+		                    <tr>
+		                        <th>#</th>
+		                        <th>Nome</th>
+		                        <th>Ação</th>
+		                    </tr>
 	                    </thead>
+	                    
 	                    <tbody>
-	                    <tr>
-	                        <td>3</td>
-	                        <td>Administração</td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/departamentos/editar/3" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button id="btn_departamentos/excluir/3" type="button" class="btn btn-danger btn-sm">
-	                                <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>2</td>
-	                        <td>Contabilidade</td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/departamentos/editar/2" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button type="button" class="btn btn-danger btn-sm">
-	                                <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>1</td>
-	                        <td>Recursos Humanos</td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/departamentos/editar/1" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button type="button" class="btn btn-danger btn-sm" >
-	                                <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>4</td>
-	                        <td>Tecnologia da Informação</td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/departamentos/editar/4" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button type="button" class="btn btn-danger btn-sm" >
-	                                <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
+		                    <tr th:each="departamento : ${listaDepartamentos}">
+		                        <td th:text="${departamento.id}">1</td>
+		                        <td th:text="${departamento.nome}">Administração</td>
+		                        <td colspan="2">
+		                            <a class="btn btn-info btn-sm" th:href="@{/departamentos/editar/{id} (id=${departamento.id}) }" role="button">
+		                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+		                            </a>
+		                            <button th:id="${'btn_departamentos/excluir/' + departamento.id }" type="button" class="btn btn-danger btn-sm"
+		                            		data-toggle="modal" data-target="#myModal">
+		                                <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
+		                            </button>
+		                        </td>
+		                    </tr>
 	                    </tbody>
 	                </table>
 	            </div>
 	        </div>
 	
-	    </section>
+			<div th:replace="fragments/modal :: modal"></div>
 	
-</body>
+	    </section>
+	    
+	</body>
 </html>		

@@ -5,9 +5,27 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 /*
  * columnDefinition 		 -> define o tipo de dado que será gravado no banco
  * cascade = CascadeType.ALL -> Quando se insere/atualiza/deleta um funcionário, acontece o mesmo com endereço. 
+ * */
+
+/*
+ * Como o spring não sabe converter string para localDate da erro, assim como para o bigdecimal.
+ * 
+ * @DateTimeFormat -> essa anotação informa ao spring que o atributo será convertido conforme o formato padrão q é dd/MM/yyyy.
+ * 				   -> Pode ser usado também antes de um parâmetro de método do controller.
+ * 
+ * ISO 			   -> Padrão para data totalmente numérica em formato AAAA-MM-DD
+ * ISO.DATE		   -> Formato que contêm apenas a data, para yyyy-mm-dd. Caso o valor vier em branco, será reconhecido e setado como null.
+ * 
+ * Style.CURRENCY  -> Estilo moeda, por padrão usa o estilo americano;
+ * 
  * */
 
 @SuppressWarnings("serial")
@@ -18,12 +36,15 @@ public class Funcionario extends AbstractEntity<Long> {
 	@Column(nullable = false, unique = true)
 	private String nome;
 	
+	@NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
 	@Column(nullable = false, columnDefinition = "DECIMAL(7,2) DEFAULT 0.00")
 	private BigDecimal salario;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	@Column(name = "data_entrada", nullable = false, columnDefinition = "DATE")
 	private LocalDate dataEntrada;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	@Column(name = "data_saida", columnDefinition = "DATE")
 	private LocalDate dataSaida;
 	
