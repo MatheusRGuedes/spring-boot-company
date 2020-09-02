@@ -130,6 +130,17 @@ public class FuncionarioController {
 	}
 	
 	
+	@GetMapping("/buscar/cargo")
+	public String buscarCargo(@RequestParam("id") Long cargoId, ModelMap model) {
+		
+		List<Funcionario> funcionarios = funcionarioService.buscarPorCargo(cargoId);
+		
+		model.addAttribute("listaFuncionarios", funcionarios);
+		
+		return "/funcionario/lista";
+	}
+	
+	
 	/* Model Atributes para serem enviados para as páginas */
 	
 	@ModelAttribute("listaCargos")

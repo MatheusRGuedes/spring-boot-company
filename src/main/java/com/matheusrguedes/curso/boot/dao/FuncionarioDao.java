@@ -24,4 +24,6 @@ public interface FuncionarioDao {
 	List<Funcionario> findByEntryData(LocalDate dataEntrada);
 	
 	List<Funcionario> findByExitData(LocalDate dataSaida);
+
+	List<Funcionario> findByCargoId(Long id);
 }

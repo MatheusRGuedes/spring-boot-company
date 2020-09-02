@@ -48,4 +48,9 @@ public class FuncionarioDaoImpl extends AbstractDao<Funcionario, Long> implement
 						 + " order by f.dataEntrada asc ", 
 						 dataSaida);
 	}
+	
+	@Override
+	public List<Funcionario> findByCargoId(Long id) {
+		return createQuery(" Select f from Funcionario f where f.cargo.id = ?1 ", id);
+	}
 }

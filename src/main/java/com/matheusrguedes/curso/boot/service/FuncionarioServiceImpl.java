@@ -1,7 +1,6 @@
 package com.matheusrguedes.curso.boot.service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +21,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
 	@Autowired
 	private FuncionarioDao funcionarioDao;
-	
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	@Override
 	public void salvar(Funcionario funcionario) {
@@ -73,5 +70,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		}
 		
 		return funcionarioDao.findBetweenDatas(dataEntrada, dataSaida);
+	}
+	
+	@Override
+	public List<Funcionario> buscarPorCargo(Long id) {
+		return funcionarioDao.findByCargoId(id);
 	}
 }
