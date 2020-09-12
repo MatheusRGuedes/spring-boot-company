@@ -65,8 +65,8 @@
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="dataEntrada">Data de Entrada</label>
-	                        <input type="date" class="form-control" id="dataEntrada" th:field="*{dataEntrada}"
-	                        th:classappend="${#fields.hasErrors('dataEntrada')} ? 'is-invalid' "/>
+	                        <input type="date" class="form-control" id="dataEntrada" 
+	                        th:field="*{dataEntrada}" th:classappend="${#fields.hasErrors('dataEntrada')} ? 'is-invalid' "/>
 	                        
 	                        <div class="invalid-feedback">
 								<span th:errors="*{dataEntrada}"></span>
@@ -75,8 +75,8 @@
 	                    
 	                    <div class="form-group col-md-6">
 	                        <label for="dataSaida">Data de Saída</label>
-	                        <input type="date" class="form-control" id="dataSaida" th:field="*{dataSaida}"
-	                        th:classappend="${#fields.hasErrors('dataSaida')} ? 'is-invalid' "/>
+	                        <input type="date" class="form-control"  id="dataSaida" 
+	                        th:field="*{dataSaida}" th:classappend="${#fields.hasErrors('dataSaida')} ? 'is-invalid' "/>
 	                        
 	                        <div class="invalid-feedback">
 								<span th:errors="*{dataSaida}"></span>

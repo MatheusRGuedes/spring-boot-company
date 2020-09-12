@@ -12,7 +12,9 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,12 @@ import com.matheusrguedes.curso.boot.domain.Funcionario;
 import com.matheusrguedes.curso.boot.domain.Uf;
 import com.matheusrguedes.curso.boot.service.CargoService;
 import com.matheusrguedes.curso.boot.service.FuncionarioService;
+import com.matheusrguedes.curso.boot.web.validator.FuncionarioValidator;
+
+/*
+ * @InitBinder -> indica que o método com a anotação será o primeiro a ser executado ao fazer uma requisição a este controlador;
+ * 			   -> Dessa forma ele ativa a validação e o Spring MVC vai até o FuncionarioValidator para ativar a validação, antes de chegar ao método da requisição (salvar ou editar);
+ * */
 
 @Controller
 @RequestMapping("/funcionarios")
@@ -35,6 +43,12 @@ public class FuncionarioController {
 	
 	@Autowired
 	private CargoService cargoService;
+	
+	
+	@InitBinder
+	public void InitBinder(WebDataBinder binder) {
+		binder.addValidators(new FuncionarioValidator());
+	}
 	
 	
 	/*---------- Cadastro ---------*/
@@ -48,6 +62,8 @@ public class FuncionarioController {
 	@PostMapping("/salvar")
 	public String salvar(@Valid Funcionario funcionario, BindingResult result,
 			RedirectAttributes attr) {
+		
+		//new FuncionarioValidator().validate(funcionario, result);
 		
 		if (result.hasErrors()) {
 			return "/funcionario/cadastro";
