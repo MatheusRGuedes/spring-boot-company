@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.matheusrguedes.curso.boot.domain.Cargo;
+import com.matheusrguedes.curso.boot.domain.Departamento;
 import com.matheusrguedes.curso.boot.domain.Funcionario;
 import com.matheusrguedes.curso.boot.domain.Uf;
 import com.matheusrguedes.curso.boot.service.CargoService;
+import com.matheusrguedes.curso.boot.service.DepartamentoService;
 import com.matheusrguedes.curso.boot.service.FuncionarioService;
 import com.matheusrguedes.curso.boot.web.validator.FuncionarioValidator;
 
@@ -60,7 +63,7 @@ public class FuncionarioController {
 	
 	
 	@PostMapping("/salvar")
-	public String salvar(@Valid Funcionario funcionario, BindingResult result,
+	public String salvar(@Valid Funcionario funcionario, BindingResult result, 
 			RedirectAttributes attr) {
 		
 		//new FuncionarioValidator().validate(funcionario, result);
@@ -176,6 +179,11 @@ public class FuncionarioController {
 	public List<Cargo> listaCargos() {
 		return cargoService.buscarTodos();
 	}
+	/*
+	@ModelAttribute("listaDepartamentos")
+	public List<Departamento> listaDepartamentos() {
+		return departamentoService.buscarTodos();
+	}*/
 	
 	@ModelAttribute("listaUfs")
 	public List<Uf> listaUfs() {

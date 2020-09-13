@@ -83,7 +83,22 @@
 	                        </div>
 	                    </div>
 	                </div>
-	                <div class="form-row">
+	                
+	                <!-- Ajax ao selecionar um departamento e buscar os cargos relacionados -->
+	                
+	                <div class="form-row"><!--
+	                    <div class="form-group col-md-6" th:object="${departamento}>
+	                        <label for="departamento">Departamento</label>
+	                        <select id="departamento" class="form-control" th:field="*{id}">
+	                            <option value="">Selecione...</option>
+	                            <option th:each="dept : ${listaDepartamentos}" th:value="${dept.id}" th:text="${dept.nome}">Contabilidade</option>
+	                        </select>
+	                        
+	                        <div class="invalid-feedback">
+								<span th:errors="*{cargo.departamento}"></span>
+	                        </div>
+	                    </div>-->
+	                
 	                    <div class="form-group col-md-6">
 	                        <label for="cargo">Cargo</label>
 	                        <select id="cargo" class="form-control" th:field="*{cargo}" th:classappend="${#fields.hasErrors('cargo')} ? 'is-invalid' ">

@@ -1,7 +1,5 @@
 package com.matheusrguedes.curso.boot.web.validator;
 
-import java.time.format.DateTimeFormatter;
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -16,8 +14,6 @@ import com.matheusrguedes.curso.boot.domain.Funcionario;
 
 public class FuncionarioValidator implements Validator {
 
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		
