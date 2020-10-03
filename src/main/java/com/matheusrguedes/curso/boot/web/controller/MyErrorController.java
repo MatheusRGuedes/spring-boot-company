@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 
  * */
 
-@Controller
+//@Controller (não é executada)
 public class MyErrorController implements ErrorController {
 
 	@RequestMapping("/error")

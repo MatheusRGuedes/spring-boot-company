@@ -58,7 +58,7 @@ public class FuncionarioController {
 	
 	@GetMapping("/cadastrar")
 	public String cadastrar(Funcionario funcionario) {
-		return "/funcionario/cadastro";
+		return "funcionario/cadastro";
 	}
 	
 	
@@ -69,7 +69,7 @@ public class FuncionarioController {
 		//new FuncionarioValidator().validate(funcionario, result);
 		
 		if (result.hasErrors()) {
-			return "/funcionario/cadastro";
+			return "funcionario/cadastro";
 		}
 		
 		funcionarioService.salvar(funcionario);
@@ -89,7 +89,7 @@ public class FuncionarioController {
 		
 		model.addAttribute("listaFuncionarios", listaFuncionarios);
 		
-		return "/funcionario/lista";
+		return "funcionario/lista";
 	}
 	
 	
@@ -112,7 +112,7 @@ public class FuncionarioController {
 			RedirectAttributes attr) {
 		
 		if (result.hasErrors()) {
-			return "/funcionario/cadastro";
+			return "funcionario/cadastro";
 		}
 		
 		funcionarioService.editar(funcionario);
@@ -146,7 +146,7 @@ public class FuncionarioController {
 		
 		model.addAttribute("listaFuncionarios", funcionarios);
 		
-		return "/funcionario/lista";
+		return "funcionario/lista";
 	}
 	
 	@GetMapping("/buscar/data")
@@ -158,7 +158,7 @@ public class FuncionarioController {
 		
 		model.addAttribute("listaFuncionarios", funcionarios);
 		
-		return "/funcionario/lista";
+		return "funcionario/lista";
 	}
 	
 	
@@ -169,7 +169,7 @@ public class FuncionarioController {
 		
 		model.addAttribute("listaFuncionarios", funcionarios);
 		
-		return "/funcionario/lista";
+		return "funcionario/lista";
 	}
 	
 	
@@ -179,11 +179,6 @@ public class FuncionarioController {
 	public List<Cargo> listaCargos() {
 		return cargoService.buscarTodos();
 	}
-	/*
-	@ModelAttribute("listaDepartamentos")
-	public List<Departamento> listaDepartamentos() {
-		return departamentoService.buscarTodos();
-	}*/
 	
 	@ModelAttribute("listaUfs")
 	public List<Uf> listaUfs() {

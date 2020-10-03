@@ -50,7 +50,7 @@ public class DepartamentoController {
 	
 	@GetMapping("/cadastrar")
 	public String cadastro(Departamento departamento) {
-		return "/departamento/cadastro";
+		return "departamento/cadastro";
 	}
 	
 	@PostMapping("/salvar")
@@ -78,7 +78,7 @@ public class DepartamentoController {
 		
 		model.addAttribute("listaDepartamentos", lista);
 		
-		return "/departamento/lista";
+		return "departamento/lista";
 	}
 	
 	/*---------- Edição ----------*/
@@ -90,7 +90,7 @@ public class DepartamentoController {
 		
 		model.addAttribute("departamento", departamento);
 			
-		return "/departamento/cadastro";
+		return "departamento/cadastro";
 	}
 	
 	@PostMapping("/editar")

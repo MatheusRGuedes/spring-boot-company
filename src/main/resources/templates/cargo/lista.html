@@ -5,7 +5,7 @@ Pesquisar: Expression Utility Objects
  -->
 
 <!DOCTYPE html>
-<html layout:decorate="~{Layout}">
+<html layout:decorate="~{layout}">
 <head><meta charset="UTF-8"/></head>
 
 	    <section class="layout-content" layout:fragment="corpo">
@@ -19,7 +19,7 @@ Pesquisar: Expression Utility Objects
 	                    </li>
 	                </ul>
 	            </div>
-	            <a class="btn btn-primary btn-md" href="/cargos/cadastrar" role="button">
+	            <a class="btn btn-primary btn-md" th:href="@{/cargos/cadastrar}" role="button">
 	                <span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
 	                <span>Novo Cargo</span>
 	            </a>

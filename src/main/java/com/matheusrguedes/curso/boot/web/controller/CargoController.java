@@ -47,7 +47,7 @@ public class CargoController {
 		//List<Departamento> departamentos = departamentoService.buscarTodos();
 		//model.addAttribute("listaDepartamentos", departamentos);
 		
-		return "/cargo/cadastro";
+		return "cargo/cadastro";
 	}
 	
 	@PostMapping("/salvar")
@@ -55,7 +55,7 @@ public class CargoController {
 		
 		if (result.hasErrors()) {
 			//attr.addFlashAttribute("errors", result.getFieldErrors());
-			return "/cargo/cadastro";
+			return "cargo/cadastro";
 		}
 		
 		cargoService.salvar(cargo);
@@ -74,7 +74,7 @@ public class CargoController {
 		
 		model.addAttribute("listaCargos", listaCargos);
 		
-		return "/cargo/lista";
+		return "cargo/lista";
 	}
 	
 	/*-------- Edição ---------*/
@@ -87,7 +87,7 @@ public class CargoController {
 		
 		model.addAttribute("cargo", cargo);
 		
-		return "/cargo/cadastro";
+		return "cargo/cadastro";
 	}
 	
 	@PostMapping("/editar")
@@ -95,7 +95,7 @@ public class CargoController {
 		
 		if (result.hasErrors()) {
 			//attr.addFlashAttribute("errors", result.getFieldErrors());
-			return "/cargo/cadastro";
+			return "cargo/cadastro";
 		}
 		
 		cargoService.editar(cargo);
