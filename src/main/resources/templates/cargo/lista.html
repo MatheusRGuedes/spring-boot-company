@@ -2,6 +2,7 @@
 Pesquisar: Expression Utility Objects
 
 #string -> objeto utilitário para expressões que possue vários métodos para manipular strings;
+||      -> literal substitutions, can replace the method of the utilitarian expression #strings.concat();
  -->
 
 <!DOCTYPE html>
@@ -34,13 +35,22 @@ Pesquisar: Expression Utility Objects
 	                    <thead>
 		                    <tr>
 		                        <th>#</th>
-		                        <th>Cargo</th>
+		                        <th>
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=desc) }" >
+		                        		<span class="oi oi-arrow-top"></span>
+		                        	</a>
+		                        	Cargo
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=asc) }" >
+		                        		<span class="oi oi-arrow-bottom"></span>
+		                        	</a>
+		                        </th>
 		                        <th>Departamento</th>
 		                        <th>Ação</th>
 		                    </tr>
 	                    </thead>
+	                    
 	                    <tbody>
-		                    <tr th:each="cargo : ${listaCargos}">
+		                    <tr th:each="cargo : ${pageCargo.registros}">
 		                        <td th:text="${cargo.id}">1</td>
 		                        <td th:text="${cargo.nome}">Auxiliar Contábil</td>
 		                        <td th:text="${cargo.departamento.nome}">Contabilidade</td>
@@ -58,6 +68,34 @@ Pesquisar: Expression Utility Objects
 		                    </tr>
 	                    </tbody>
 	                </table>
+	                
+	                <nav aria-label="Navegação de página exemplo">
+					 	<ul class="pagination justify-content-center">
+					 		<li class="page-item" th:classappend="${pageCargo.pagina == 1 ? 'disabled' : '' }">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${1}, dir=${pageCargo.direcao}) }" tabindex="-1">
+									<span class="oi oi-media-skip-backward" title="Primeira Página" aria-hidden="true"></span>
+								</a>
+						    </li>
+					 		
+						    <li class="page-item" th:classappend="${pageCargo.pagina == 1 ? 'disabled' : '' }">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.pagina - 1}, dir=${pageCargo.direcao}) }" tabindex="-1">Anterior</a>
+						    </li>
+						    
+						    <li class="page-item">
+						    	<span class="page-link" th:text="|${pageCargo.pagina} de ${pageCargo.totalPaginas}|">paginaAtual de totalPaginas</span>
+						    </li>
+						    
+						    <li class="page-item" th:classappend="${pageCargo.pagina == pageCargo.totalPaginas ? 'disabled' : '' }">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.pagina + 1}, dir=${pageCargo.direcao}) }">Próximo</a>
+						    </li>
+						    
+						    <li class="page-item" th:classappend="${pageCargo.pagina == pageCargo.totalPaginas ? 'disabled' : '' }">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.totalPaginas}, dir=${pageCargo.direcao}) }" tabindex="-1">
+						      		<span class="oi oi-media-skip-forward" title="Última Página" aria-hidden="true"></span>
+						      	</a>
+						    </li>
+					  	</ul>
+					</nav>
 	            </div>
 	        </div>
 	        

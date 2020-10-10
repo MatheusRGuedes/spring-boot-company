@@ -10,6 +10,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @SuppressWarnings("serial")
+
+@NamedQueries({
+	@NamedQuery(name = "Cargo.count", query = " select count(c) from Cargo c ")
+})
 @Entity
 @Table(name = "CARGOS")
 public class Cargo extends AbstractEntity<Long> {

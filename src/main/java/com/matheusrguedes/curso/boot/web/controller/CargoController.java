@@ -1,6 +1,7 @@
 package com.matheusrguedes.curso.boot.web.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.matheusrguedes.curso.boot.dao.CargoDaoImpl;
 import com.matheusrguedes.curso.boot.domain.Cargo;
 import com.matheusrguedes.curso.boot.domain.Departamento;
 import com.matheusrguedes.curso.boot.service.CargoService;
 import com.matheusrguedes.curso.boot.service.DepartamentoService;
+import com.matheusrguedes.curso.boot.util.PaginacaoUtil;
 
 /*
  * Pode se referenciar o objeto e o atributo diretamento no elemento de formulário (input, select...) através de th:field="*{objeto.propriedade}" ao invés de definir apenas um th:objet para o form
@@ -37,6 +41,9 @@ public class CargoController {
 	
 	@Autowired
 	private CargoService cargoService;
+	
+	//@Autowired
+	//private CargoDaoImpl cargoDaoImpl;
 
 	/*-------- Cadastro ---------*/
 	
@@ -68,11 +75,16 @@ public class CargoController {
 	/*-------- Listagem ----------*/
 	
 	@GetMapping("/listar")
-	public String listar(ModelMap model) {
+	public String listar(ModelMap model, 
+			@RequestParam("page") Optional<Integer> page, 
+			@RequestParam("dir") Optional<String> direcao) {
 		
-		List<Cargo> listaCargos = cargoService.buscarTodos();
+		int paginaAtual = page.orElse(1);
+		String direcaoOrdem = direcao.orElse("asc");
 		
-		model.addAttribute("listaCargos", listaCargos);
+		PaginacaoUtil<Cargo> pageCargo = cargoService.buscarPorPagina(paginaAtual, direcaoOrdem);
+		
+		model.addAttribute("pageCargo", pageCargo);
 		
 		return "cargo/lista";
 	}
