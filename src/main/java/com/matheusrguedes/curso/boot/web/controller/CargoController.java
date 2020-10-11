@@ -77,12 +77,16 @@ public class CargoController {
 	@GetMapping("/listar")
 	public String listar(ModelMap model, 
 			@RequestParam("page") Optional<Integer> page, 
-			@RequestParam("dir") Optional<String> direcao) {
+			@RequestParam("dir") Optional<String> direcao,
+			@RequestParam("prop") Optional<String> prop,
+			@RequestParam("rows") Optional<Integer> rows) {
 		
 		int paginaAtual = page.orElse(1);
 		String direcaoOrdem = direcao.orElse("asc");
+		String propriedade = prop.orElse("nome");
+		int numLinhas = rows.orElse(5);
 		
-		PaginacaoUtil<Cargo> pageCargo = cargoService.buscarPorPagina(paginaAtual, direcaoOrdem);
+		PaginacaoUtil<Cargo> pageCargo = cargoService.buscarPorPagina(paginaAtual, direcaoOrdem, propriedade, numLinhas);
 		
 		model.addAttribute("pageCargo", pageCargo);
 		

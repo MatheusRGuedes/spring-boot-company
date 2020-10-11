@@ -105,9 +105,13 @@ layout:decorate -> Informa que o fragmento de layout será incluso no arquivo in
 				url = 'http://localhost:8080/' + compl.split("_")[1];
 			});
 		    
-		    
 		    $('#ok_confirm').click(function(){
 		    	document.location.href = url;
+		    });
+		    
+		    
+		    $('#rows').change(function(){
+		    	document.location.href = "http://localhost:8080" + $(this).val();
 		    });
 		    
 		    

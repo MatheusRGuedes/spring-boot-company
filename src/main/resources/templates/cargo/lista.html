@@ -36,15 +36,23 @@ Pesquisar: Expression Utility Objects
 		                    <tr>
 		                        <th>#</th>
 		                        <th>
-		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=desc) }" >
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=desc, prop=nome, rows=${pageCargo.tamanho}) }" >
 		                        		<span class="oi oi-arrow-top"></span>
 		                        	</a>
 		                        	Cargo
-		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=asc) }" >
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=asc, prop=nome, rows=${pageCargo.tamanho}) }" >
 		                        		<span class="oi oi-arrow-bottom"></span>
 		                        	</a>
 		                        </th>
-		                        <th>Departamento</th>
+		                        <th>
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=desc, prop=departamento, rows=${pageCargo.tamanho}) }" >
+		                        		<span class="oi oi-arrow-top"></span>
+		                        	</a>
+		                        	Departamento
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=asc, prop=departamento, rows=${pageCargo.tamanho}) }" >
+		                        		<span class="oi oi-arrow-bottom"></span>
+		                        	</a>
+		                        </th>
 		                        <th>Ação</th>
 		                    </tr>
 	                    </thead>
@@ -70,15 +78,26 @@ Pesquisar: Expression Utility Objects
 	                </table>
 	                
 	                <nav aria-label="Navegação de página exemplo">
+	                
+	                	<div>
+        					Showing&nbsp;
+						    <select id="rows">
+						        <option th:selected="${pageCargo.tamanho == 5}" th:value="|/cargos/listar?page=1&dir=${pageCargo.direcao}&prop=${pageCargo.propriedade}&rows=5|">5</option>
+						        <option th:selected="${pageCargo.tamanho == 10}" th:value="|/cargos/listar?page=1&dir=${pageCargo.direcao}&prop=${pageCargo.propriedade}&rows=10|">10</option>
+						        <option th:selected="${pageCargo.tamanho == 15}" th:value="|/cargos/listar?page=1&dir=${pageCargo.direcao}&prop=${pageCargo.propriedade}&rows=15|">15</option>
+						    </select>
+						    &nbsp;rows per page.
+						</div>
+	                	
 					 	<ul class="pagination justify-content-center">
 					 		<li class="page-item" th:classappend="${pageCargo.pagina == 1 ? 'disabled' : '' }">
-						      	<a class="page-link" th:href="@{/cargos/listar(page=${1}, dir=${pageCargo.direcao}) }" tabindex="-1">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${1}, dir=${pageCargo.direcao}, prop=${pageCargo.propriedade}, rows=${pageCargo.tamanho}) }" tabindex="-1">
 									<span class="oi oi-media-skip-backward" title="Primeira Página" aria-hidden="true"></span>
 								</a>
 						    </li>
 					 		
 						    <li class="page-item" th:classappend="${pageCargo.pagina == 1 ? 'disabled' : '' }">
-						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.pagina - 1}, dir=${pageCargo.direcao}) }" tabindex="-1">Anterior</a>
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.pagina - 1}, dir=${pageCargo.direcao}, prop=${pageCargo.propriedade}, rows=${pageCargo.tamanho}) }" tabindex="-1">Anterior</a>
 						    </li>
 						    
 						    <li class="page-item">
@@ -86,11 +105,11 @@ Pesquisar: Expression Utility Objects
 						    </li>
 						    
 						    <li class="page-item" th:classappend="${pageCargo.pagina == pageCargo.totalPaginas ? 'disabled' : '' }">
-						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.pagina + 1}, dir=${pageCargo.direcao}) }">Próximo</a>
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.pagina + 1}, dir=${pageCargo.direcao}, prop=${pageCargo.propriedade}, rows=${pageCargo.tamanho}) }">Próximo</a>
 						    </li>
 						    
 						    <li class="page-item" th:classappend="${pageCargo.pagina == pageCargo.totalPaginas ? 'disabled' : '' }">
-						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.totalPaginas}, dir=${pageCargo.direcao}) }" tabindex="-1">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.totalPaginas}, dir=${pageCargo.direcao}, prop=${pageCargo.propriedade}, rows=${pageCargo.tamanho}) }" tabindex="-1">
 						      		<span class="oi oi-media-skip-forward" title="Última Página" aria-hidden="true"></span>
 						      	</a>
 						    </li>
