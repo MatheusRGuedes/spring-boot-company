@@ -4,12 +4,18 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,10 +24,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.matheusrguedes.curso.boot.domain.Cargo;
+import com.matheusrguedes.curso.boot.domain.Departamento;
 import com.matheusrguedes.curso.boot.domain.Funcionario;
 import com.matheusrguedes.curso.boot.domain.Uf;
 import com.matheusrguedes.curso.boot.service.CargoService;
+import com.matheusrguedes.curso.boot.service.DepartamentoService;
 import com.matheusrguedes.curso.boot.service.FuncionarioService;
+import com.matheusrguedes.curso.boot.web.validator.FuncionarioValidator;
+
+/*
+ * @InitBinder -> indica que o método com a anotação será o primeiro a ser executado ao fazer uma requisição a este controlador;
+ * 			   -> Dessa forma ele ativa a validação e o Spring MVC vai até o FuncionarioValidator para ativar a validação, antes de chegar ao método da requisição (salvar ou editar);
+ * */
 
 @Controller
 @RequestMapping("/funcionarios")
@@ -34,16 +48,29 @@ public class FuncionarioController {
 	private CargoService cargoService;
 	
 	
+	@InitBinder
+	public void InitBinder(WebDataBinder binder) {
+		binder.addValidators(new FuncionarioValidator());
+	}
+	
+	
 	/*---------- Cadastro ---------*/
 	
 	@GetMapping("/cadastrar")
 	public String cadastrar(Funcionario funcionario) {
-		return "/funcionario/cadastro";
+		return "funcionario/cadastro";
 	}
 	
 	
 	@PostMapping("/salvar")
-	public String salvar(Funcionario funcionario, RedirectAttributes attr) {
+	public String salvar(@Valid Funcionario funcionario, BindingResult result, 
+			RedirectAttributes attr) {
+		
+		//new FuncionarioValidator().validate(funcionario, result);
+		
+		if (result.hasErrors()) {
+			return "funcionario/cadastro";
+		}
 		
 		funcionarioService.salvar(funcionario);
 		
@@ -62,7 +89,7 @@ public class FuncionarioController {
 		
 		model.addAttribute("listaFuncionarios", listaFuncionarios);
 		
-		return "/funcionario/lista";
+		return "funcionario/lista";
 	}
 	
 	
@@ -81,7 +108,12 @@ public class FuncionarioController {
 	
 	
 	@PostMapping("/editar")
-	public String editar(Funcionario funcionario, RedirectAttributes attr) {
+	public String editar(@Valid Funcionario funcionario, BindingResult result, 
+			RedirectAttributes attr) {
+		
+		if (result.hasErrors()) {
+			return "funcionario/cadastro";
+		}
 		
 		funcionarioService.editar(funcionario);
 		
@@ -114,7 +146,7 @@ public class FuncionarioController {
 		
 		model.addAttribute("listaFuncionarios", funcionarios);
 		
-		return "/funcionario/lista";
+		return "funcionario/lista";
 	}
 	
 	@GetMapping("/buscar/data")
@@ -126,7 +158,7 @@ public class FuncionarioController {
 		
 		model.addAttribute("listaFuncionarios", funcionarios);
 		
-		return "/funcionario/lista";
+		return "funcionario/lista";
 	}
 	
 	
@@ -137,7 +169,7 @@ public class FuncionarioController {
 		
 		model.addAttribute("listaFuncionarios", funcionarios);
 		
-		return "/funcionario/lista";
+		return "funcionario/lista";
 	}
 	
 	

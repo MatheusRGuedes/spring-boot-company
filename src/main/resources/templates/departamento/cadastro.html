@@ -10,7 +10,7 @@ th:field  -> Indique em que atributo o campo está vinculado. Esse componente é
  -->
 
 <!DOCTYPE html>
-<html layout:decorate="~{Layout}">
+<html layout:decorate="~{layout}">
 <head><meta charset="UTF-8"/></head>
 <body>
 	
@@ -24,7 +24,7 @@ th:field  -> Indique em que atributo o campo está vinculado. Esse componente é
 	                        <span>Cadastrar Departamentos</span>
 	                    </li>
 	                </ul>
-	                <a class="btn btn-primary btn-md" href="/departamentos/listar" role="button">
+	                <a class="btn btn-primary btn-md" th:href="@{/departamentos/listar}" role="button">
 	                    <span class="oi oi-spreadsheet" title="Listar" aria-hidden="true"></span>
 	                    <span>Listar Departamentos</span>
 	                </a>

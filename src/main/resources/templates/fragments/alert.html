@@ -32,3 +32,20 @@
   		</button>
 	</div>
 </div>
+
+
+<!-- Uma forma de exibir mensagene. A outra forma é o uso do #fields em fragments/validation -->
+
+<div th:if="${errors} != null">
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		
+		<div th:each="error : ${errors}">
+			<i class="oi oi-warning"></i>
+			<span th:text="${error.defaultMessage }">Descrição erro</span>
+	  	</div>
+  		
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    		<span aria-hidden="true">&times;</span>
+  		</button>
+	</div>
+</div>

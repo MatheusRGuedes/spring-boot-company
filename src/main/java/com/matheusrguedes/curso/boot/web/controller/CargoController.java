@@ -1,21 +1,28 @@
 package com.matheusrguedes.curso.boot.web.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.matheusrguedes.curso.boot.dao.CargoDaoImpl;
 import com.matheusrguedes.curso.boot.domain.Cargo;
 import com.matheusrguedes.curso.boot.domain.Departamento;
 import com.matheusrguedes.curso.boot.service.CargoService;
 import com.matheusrguedes.curso.boot.service.DepartamentoService;
+import com.matheusrguedes.curso.boot.util.PaginacaoUtil;
 
 /*
  * Pode se referenciar o objeto e o atributo diretamento no elemento de formulário (input, select...) através de th:field="*{objeto.propriedade}" ao invés de definir apenas um th:objet para o form
@@ -34,6 +41,9 @@ public class CargoController {
 	
 	@Autowired
 	private CargoService cargoService;
+	
+	//@Autowired
+	//private CargoDaoImpl cargoDaoImpl;
 
 	/*-------- Cadastro ---------*/
 	
@@ -44,12 +54,17 @@ public class CargoController {
 		//List<Departamento> departamentos = departamentoService.buscarTodos();
 		//model.addAttribute("listaDepartamentos", departamentos);
 		
-		return "/cargo/cadastro";
+		return "cargo/cadastro";
 	}
 	
 	@PostMapping("/salvar")
-	public String salvar(Cargo cargo, RedirectAttributes attr) {
-			
+	public String salvar(@Valid Cargo cargo, BindingResult result, RedirectAttributes attr) {
+		
+		if (result.hasErrors()) {
+			//attr.addFlashAttribute("errors", result.getFieldErrors());
+			return "cargo/cadastro";
+		}
+		
 		cargoService.salvar(cargo);
 		
 		attr.addFlashAttribute("success", "Cargo inserido com sucesso.");
@@ -60,13 +75,22 @@ public class CargoController {
 	/*-------- Listagem ----------*/
 	
 	@GetMapping("/listar")
-	public String listar(ModelMap model) {
+	public String listar(ModelMap model, 
+			@RequestParam("page") Optional<Integer> page, 
+			@RequestParam("dir") Optional<String> direcao,
+			@RequestParam("prop") Optional<String> prop,
+			@RequestParam("rows") Optional<Integer> rows) {
 		
-		List<Cargo> listaCargos = cargoService.buscarTodos();
+		int paginaAtual = page.orElse(1);
+		String direcaoOrdem = direcao.orElse("asc");
+		String propriedade = prop.orElse("nome");
+		int numLinhas = rows.orElse(5);
 		
-		model.addAttribute("listaCargos", listaCargos);
+		PaginacaoUtil<Cargo> pageCargo = cargoService.buscarPorPagina(paginaAtual, direcaoOrdem, propriedade, numLinhas);
 		
-		return "/cargo/lista";
+		model.addAttribute("pageCargo", pageCargo);
+		
+		return "cargo/lista";
 	}
 	
 	/*-------- Edição ---------*/
@@ -79,11 +103,16 @@ public class CargoController {
 		
 		model.addAttribute("cargo", cargo);
 		
-		return "/cargo/cadastro";
+		return "cargo/cadastro";
 	}
 	
 	@PostMapping("/editar")
-	public String editar(Cargo cargo, RedirectAttributes attr) {
+	public String editar(@Valid Cargo cargo, BindingResult result, RedirectAttributes attr) {
+		
+		if (result.hasErrors()) {
+			//attr.addFlashAttribute("errors", result.getFieldErrors());
+			return "cargo/cadastro";
+		}
 		
 		cargoService.editar(cargo);
 		

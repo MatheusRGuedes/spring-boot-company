@@ -2,10 +2,11 @@
 Pesquisar: Expression Utility Objects
 
 #string -> objeto utilitário para expressões que possue vários métodos para manipular strings;
+||      -> literal substitutions, can replace the method of the utilitarian expression #strings.concat();
  -->
 
 <!DOCTYPE html>
-<html layout:decorate="~{Layout}">
+<html layout:decorate="~{layout}">
 <head><meta charset="UTF-8"/></head>
 
 	    <section class="layout-content" layout:fragment="corpo">
@@ -19,7 +20,7 @@ Pesquisar: Expression Utility Objects
 	                    </li>
 	                </ul>
 	            </div>
-	            <a class="btn btn-primary btn-md" href="/cargos/cadastrar" role="button">
+	            <a class="btn btn-primary btn-md" th:href="@{/cargos/cadastrar}" role="button">
 	                <span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
 	                <span>Novo Cargo</span>
 	            </a>
@@ -34,13 +35,30 @@ Pesquisar: Expression Utility Objects
 	                    <thead>
 		                    <tr>
 		                        <th>#</th>
-		                        <th>Cargo</th>
-		                        <th>Departamento</th>
+		                        <th>
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=desc, prop=nome, rows=${pageCargo.tamanho}) }" >
+		                        		<span class="oi oi-arrow-top"></span>
+		                        	</a>
+		                        	Cargo
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=asc, prop=nome, rows=${pageCargo.tamanho}) }" >
+		                        		<span class="oi oi-arrow-bottom"></span>
+		                        	</a>
+		                        </th>
+		                        <th>
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=desc, prop=departamento, rows=${pageCargo.tamanho}) }" >
+		                        		<span class="oi oi-arrow-top"></span>
+		                        	</a>
+		                        	Departamento
+		                        	<a class="text-dark" th:href="@{/cargos/listar(page=${pageCargo.pagina}, dir=asc, prop=departamento, rows=${pageCargo.tamanho}) }" >
+		                        		<span class="oi oi-arrow-bottom"></span>
+		                        	</a>
+		                        </th>
 		                        <th>Ação</th>
 		                    </tr>
 	                    </thead>
+	                    
 	                    <tbody>
-		                    <tr th:each="cargo : ${listaCargos}">
+		                    <tr th:each="cargo : ${pageCargo.registros}">
 		                        <td th:text="${cargo.id}">1</td>
 		                        <td th:text="${cargo.nome}">Auxiliar Contábil</td>
 		                        <td th:text="${cargo.departamento.nome}">Contabilidade</td>
@@ -58,6 +76,45 @@ Pesquisar: Expression Utility Objects
 		                    </tr>
 	                    </tbody>
 	                </table>
+	                
+	                <nav aria-label="Navegação de página exemplo">
+	                
+	                	<div>
+        					Showing&nbsp;
+						    <select id="rows">
+						        <option th:selected="${pageCargo.tamanho == 5}" th:value="|/cargos/listar?page=1&dir=${pageCargo.direcao}&prop=${pageCargo.propriedade}&rows=5|">5</option>
+						        <option th:selected="${pageCargo.tamanho == 10}" th:value="|/cargos/listar?page=1&dir=${pageCargo.direcao}&prop=${pageCargo.propriedade}&rows=10|">10</option>
+						        <option th:selected="${pageCargo.tamanho == 15}" th:value="|/cargos/listar?page=1&dir=${pageCargo.direcao}&prop=${pageCargo.propriedade}&rows=15|">15</option>
+						    </select>
+						    &nbsp;rows per page.
+						</div>
+	                	
+					 	<ul class="pagination justify-content-center">
+					 		<li class="page-item" th:classappend="${pageCargo.pagina == 1 ? 'disabled' : '' }">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${1}, dir=${pageCargo.direcao}, prop=${pageCargo.propriedade}, rows=${pageCargo.tamanho}) }" tabindex="-1">
+									<span class="oi oi-media-skip-backward" title="Primeira Página" aria-hidden="true"></span>
+								</a>
+						    </li>
+					 		
+						    <li class="page-item" th:classappend="${pageCargo.pagina == 1 ? 'disabled' : '' }">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.pagina - 1}, dir=${pageCargo.direcao}, prop=${pageCargo.propriedade}, rows=${pageCargo.tamanho}) }" tabindex="-1">Anterior</a>
+						    </li>
+						    
+						    <li class="page-item">
+						    	<span class="page-link" th:text="|${pageCargo.pagina} de ${pageCargo.totalPaginas}|">paginaAtual de totalPaginas</span>
+						    </li>
+						    
+						    <li class="page-item" th:classappend="${pageCargo.pagina == pageCargo.totalPaginas ? 'disabled' : '' }">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.pagina + 1}, dir=${pageCargo.direcao}, prop=${pageCargo.propriedade}, rows=${pageCargo.tamanho}) }">Próximo</a>
+						    </li>
+						    
+						    <li class="page-item" th:classappend="${pageCargo.pagina == pageCargo.totalPaginas ? 'disabled' : '' }">
+						      	<a class="page-link" th:href="@{/cargos/listar(page=${pageCargo.totalPaginas}, dir=${pageCargo.direcao}, prop=${pageCargo.propriedade}, rows=${pageCargo.tamanho}) }" tabindex="-1">
+						      		<span class="oi oi-media-skip-forward" title="Última Página" aria-hidden="true"></span>
+						      	</a>
+						    </li>
+					  	</ul>
+					</nav>
 	            </div>
 	        </div>
 	        
