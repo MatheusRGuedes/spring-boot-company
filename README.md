@@ -4,24 +4,24 @@ Spring Boot Crud application made using Thymeleaf, Spring MVC.
 # Company System
 This project is based on the Spring Boot and used the following technologies:
 
-Spring Boot
-Spring MVC
-Spring Data Jpa
-MySql Database
-Thymeleaf for template engine
-Maven
-JavaScrip
+* Spring Boot
+* Spring MVC
+* Spring Data Jpa
+* MySql Database
+* Thymeleaf for template engine
+* Maven
+* JavaScrip
 
 ## Installation
 
-1. Clone the application
+1. Clone the application:
 <pre> $ git clone https://github.com/MatheusRGuedes/spring-boot-company.git </pre>
 
 2. Database Configuration
 <p>This project uses the MySql database, so follow these steps:</p>
 - Open the application.properties file in the src/main/resources/ directory;
 - If you run the application locally, change <code>spring.datasource.username</code> and <code>spring.datasource.password</code> according to what you defined on the MySql installation;
-- Insert scripts for the tables is in the data folder.
+- Insert scripts for the tables are in the data folder.
 
 3. Run
 Maven is used for project management and to run the application locally, use the commands:
@@ -32,7 +32,7 @@ or
 java -jar demo-mvc-0.0.1-SNAPSHOT.jar
 </pre>
 
-<p>The commands above will generate the package, install the dependences and execute the application on 8080 default port</p>
+<p>The commands above will generate the package, install the dependences and execute the application on 8080 default port.</p>
 <p>The application runs from <a href="http://localhost:8080">http://localhost:8080/</a>.
 
 ## Screenshots
