@@ -19,12 +19,12 @@ This project is based on the Spring Boot and used the following technologies:
 
 2. Database Configuration
 <p>This project uses the MySql database, so follow these steps:</p>
-- Open the application.properties file in the src/main/resources/ directory;
-- If you run the application locally, change <code>spring.datasource.username</code> and <code>spring.datasource.password</code> according to what you defined on the MySql installation;
-- Insert scripts for the tables are in the data folder.
+* Open the application.properties file in the src/main/resources/ directory;
+* If you run the application locally, change <code>spring.datasource.username</code> and <code>spring.datasource.password</code> according to what you defined on the MySql installation;
+* Insert scripts for the tables are in the data folder.
 
 3. Run
-Maven is used for project management and to run the application locally, use the commands:
+<p>Maven is used for project management and to run the application locally, use the commands:</p>
 <pre>mvn clean install</pre>
 <pre>
 mvn spring-boot: run
