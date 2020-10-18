@@ -18,9 +18,10 @@ JavaScrip
 <pre> $ git clone https://github.com/MatheusRGuedes/spring-boot-company.git </pre>
 
 2. Database Configuration
-This project uses the MySql database, so follow these steps:
+<p>This project uses the MySql database, so follow these steps:</p>
 - Open the application.properties file in the src/main/resources/ directory;
 - If you run the application locally, change <code>spring.datasource.username</code> and <code>spring.datasource.password</code> according to what you defined on the MySql installation;
+- Insert scripts for the tables is in the data folder.
 
 3. Run
 Maven is used for project management and to run the application locally, use the commands:
