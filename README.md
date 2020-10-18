@@ -18,13 +18,13 @@ This project is based on the Spring Boot and used the following technologies:
 <pre> $ git clone https://github.com/MatheusRGuedes/spring-boot-company.git </pre>
 
 2. Database Configuration
-<p>This project uses the MySql database, so follow these steps:</p>
+This project uses the MySql database, so follow these steps:
 * Open the application.properties file in the src/main/resources/ directory;
 * If you run the application locally, change <code>spring.datasource.username</code> and <code>spring.datasource.password</code> according to what you defined on the MySql installation;
 * Insert scripts for the tables are in the data folder.
 
 3. Run
-<p>Maven is used for project management and to run the application locally, use the commands:</p>
+Maven is used for project management and to run the application locally, use the commands:
 <pre>mvn clean install</pre>
 <pre>
 mvn spring-boot: run
@@ -32,8 +32,8 @@ or
 java -jar demo-mvc-0.0.1-SNAPSHOT.jar
 </pre>
 
-<p>The commands above will generate the package, install the dependences and execute the application on 8080 default port.</p>
-<p>The application runs from <a href="http://localhost:8080">http://localhost:8080/</a>.
+The commands above will generate the package, install the dependences and execute the application on 8080 default port.
+The application runs from <a href="http://localhost:8080/">http://localhost:8080/</a>.
 
 ## Screenshots
 1. Root Application Page
